@@ -12,6 +12,21 @@ mysql-connect-java-5.x.bin.jar对应 mysql 5.x，新建java项目，新建lib文
 5.执行SQL，处理结果
 6.关闭资源
 
-可封装为工具类：
+## 工具类的封装
 1、2、6
+
+
+## 跨平台方案
+在src目录下新建db.properties
+定义 `private static final Properties PROPERTIES = new Properties();` 读取配置文件Map
+定义 
+```java
+    static {
+        // 首次使用工具类 加载驱动 
+        InputStream is = DBUtils.class.getResourceAsStream("/db.properties");
+        // 通过流将配置文件内容加载到properties集合 把Map配置信息分割成键值对
+        PROPERTIES.load(is);
+        //通过getProperty("xxx")获取对应的值 
+        Class.forName(PROPERTIES.getProperty("driver"));
+}```
 
