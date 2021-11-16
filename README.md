@@ -13,11 +13,11 @@ mysql-connect-java-5.x.bin.jar对应 mysql 5.x，新建java项目，新建lib文
 + 6.关闭资源
 
 ## 工具类的封装
-1、2、6
+DBUtils实现加载驱动、获得连接对象、关闭资源
 
 
 ## 跨平台方案
-在src目录下新建db.properties
+在src目录下新建db.properties配置文件
 定义 `private static final Properties PROPERTIES = new Properties();` 读取配置文件Map
 定义 
 ```
@@ -30,7 +30,22 @@ mysql-connect-java-5.x.bin.jar对应 mysql 5.x，新建java项目，新建lib文
         Class.forName(PROPERTIES.getProperty("driver"));
 }
 ```
-
-
+## ORM（Object Relational Mapping）
+* 一行数据中，多个零散的数据进行整理
+* 通过entity实体类的规则对表中的数据进行对象封装
+* 表名=类名 属性名=列名
+* 提供各个属性的get、set方法
+## Dao（Date Access object）
+```sql
+CREATE TABLE Person(
+	id INT PRIMARY KEY AUTO_INCREMENT,
+	name VARCHAR(20) NOT NULL,
+	age INT NOT NULL,
+	bornDate DATE,
+	email VARCHAR(20),
+	address VARCHAR(20)
+	)CHARSET=utf8;
+```
+对同一张表的所有操作封装在XxxDaoImpl对象中
 
 
