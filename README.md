@@ -48,4 +48,6 @@ CREATE TABLE Person(
 ```
 对同一张表的所有操作封装在XxxDaoImpl对象中
 
+## 实体的重要性
+![image](https://user-images.githubusercontent.com/44385387/142001918-a2a31c62-609c-47e6-8a91-3f03665f561f.png)
 
