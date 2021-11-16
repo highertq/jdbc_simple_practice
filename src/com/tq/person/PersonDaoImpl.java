@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -117,5 +118,34 @@ public class PersonDaoImpl {
     }
 
     //查所有
-    public List<Person> selectAll(){return null;}
+    public List<Person> selectAll(){
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+        Person person = null;
+        List<Person> personList = new ArrayList<>();
+
+        try {
+            connection = DBUtils.getConnection();
+            preparedStatement = connection.prepareStatement("select * from person");
+            resultSet = preparedStatement.executeQuery();
+            while(resultSet.next()){
+                int pid = resultSet.getInt("id");
+                String name = resultSet.getString("name");
+                int age = resultSet.getInt("age");
+                Date bornDate = resultSet.getDate("borndate");
+                String email = resultSet.getString("email");
+                String address = resultSet.getString("address");
+                person = new Person(pid,name,age,bornDate,email,address);
+                personList.add(person);
+            }
+            return personList;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            DBUtils.closeAll(connection,preparedStatement,resultSet);
+        }
+
+        return null;
+    }
 }
