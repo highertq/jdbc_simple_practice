@@ -13,6 +13,14 @@ public class Person {
     public Person() {
     }
 
+    public Person(String name, int age, Date bornDate, String email, String address) {
+        this.name = name;
+        this.age = age;
+        this.bornDate = bornDate;
+        this.email = email;
+        this.address = address;
+    }
+
     public Person(int id, String name, int age, Date bornDate, String email, String address) {
         this.id = id;
         this.name = name;
