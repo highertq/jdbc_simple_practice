@@ -2,6 +2,7 @@ package com.tq.person;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.SQLException;
 import java.util.List;
 
 /**
@@ -33,7 +34,29 @@ public class PersonDaoImpl {
     }
 
     //修改
-    public int update(Person person){return 0;}
+    public int update(Person person){
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        String sql = "update person set name=?,age=?,borndate=?,email=?,address=? where id=?";
+        try {
+            connection = DBUtils.getConnection();
+            preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setString(1, person.getName());
+            preparedStatement.setInt(2,person.getAge());
+            preparedStatement.setDate(3,null);
+            preparedStatement.setString(4,person.getEmail());
+            preparedStatement.setString(5,person.getAddress());
+            preparedStatement.setInt(6,person.getId());
+            int result = preparedStatement.executeUpdate();
+            return result;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }finally {
+            DBUtils.closeAll(connection,preparedStatement,null);
+        }
+        return 0;
+    }
+
     //删除
     public int delete(int id){return 0;}
     //查单个

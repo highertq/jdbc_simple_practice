@@ -1,6 +1,6 @@
 package com.tq.person;
 
-public class TestPerson {
+public class TestPersonInsert {
     public static void main(String[] args) {
         //测试新增
         PersonDaoImpl personDao = new PersonDaoImpl();
