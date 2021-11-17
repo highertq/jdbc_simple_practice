@@ -81,7 +81,7 @@ public class PersonDaoImpl {
         return 0;
     }
 
-    //查单个
+    //查单个 - id
     public Person select(int id){
         Person person = null;
         Connection connection = null;
@@ -105,6 +105,42 @@ public class PersonDaoImpl {
                 person.setId(pid);
                 person.setAge(age);
                 person.setName(name);
+                person.setBornDate(bornDate);
+                person.setEmail(email);
+                person.setAddress(address);
+            }
+            return person;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            DBUtils.closeAll(connection,preparedStatement,resultSet);
+        }
+        return null;
+    }
+
+    //查单个 - name
+    public Person select(String name){
+        Person person = null;
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+        String sql = "select * from person where name=?";
+        try {
+            connection = DBUtils.getConnection();
+            preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setString(1,name);
+            resultSet = preparedStatement.executeQuery();
+            if(resultSet.next()){
+                person = new Person();
+                int id = resultSet.getInt("id");
+                String pname = resultSet.getString("name");
+                int age = resultSet.getInt("age");
+                Date bornDate = resultSet.getDate("borndate");
+                String email = resultSet.getString("email");
+                String address = resultSet.getString("address");
+                person.setId(id);
+                person.setAge(age);
+                person.setName(pname);
                 person.setBornDate(bornDate);
                 person.setEmail(email);
                 person.setAddress(address);
