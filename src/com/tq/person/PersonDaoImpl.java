@@ -1,5 +1,6 @@
 package com.tq.person;
 
+import javax.rmi.CORBA.Util;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -24,7 +25,7 @@ public class PersonDaoImpl {
             preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setString(1,person.getName());
             preparedStatement.setInt(2,person.getAge());
-            preparedStatement.setDate(3,null);
+            preparedStatement.setDate(3,DateUtils.UtiltoSql(person.getBornDate()));
             preparedStatement.setString(4, person.getEmail());
             preparedStatement.setString(5, person.getAddress());
             int result = preparedStatement.executeUpdate();
@@ -47,7 +48,7 @@ public class PersonDaoImpl {
             preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setString(1, person.getName());
             preparedStatement.setInt(2,person.getAge());
-            preparedStatement.setDate(3,null);
+            preparedStatement.setDate(3, DateUtils.UtiltoSql(person.getBornDate()));
             preparedStatement.setString(4,person.getEmail());
             preparedStatement.setString(5,person.getAddress());
             preparedStatement.setInt(6,person.getId());
@@ -97,7 +98,7 @@ public class PersonDaoImpl {
                 int pid = resultSet.getInt("id");
                 String name = resultSet.getString("name");
                 int age = resultSet.getInt("age");
-                //java.sql是java.utils的子类，这里左边的Date是java.utils,右边是sql Date，所以可以这样写
+                //java.sql是java.utils的子类，父类引用子类，这里左边的Date是java.utils,右边是sql Date，所以可以这样写
                 Date bornDate = resultSet.getDate("borndate");
                 String email = resultSet.getString("email");
                 String address = resultSet.getString("address");
