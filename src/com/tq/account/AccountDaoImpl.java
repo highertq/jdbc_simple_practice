@@ -5,14 +5,17 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.List;
 
-public class AccountDaoImpl {
+public class AccountDaoImpl implements AccountDao{
     public int insert(Account account){
         return 0;
     }
+
     public int delete(String cardNo){
         return 0;
     }
+
     public int update(Account account){
         Connection connection = null;
         PreparedStatement preparedStatement = null;
@@ -34,6 +37,7 @@ public class AccountDaoImpl {
         }
         return 0;
     }
+
     public Account select(String cardNo){
         Connection connection = null;
         PreparedStatement preparedStatement = null;
@@ -59,6 +63,11 @@ public class AccountDaoImpl {
         } finally {
             DBUtils.closeAll(null,preparedStatement,resultSet);
         }
+        return null;
+    }
+
+    @Override
+    public List<Account> selectAll() {
         return null;
     }
 }

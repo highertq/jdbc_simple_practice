@@ -6,7 +6,8 @@ import java.sql.SQLException;
 public class AccountServiceImpl {
     //转账
     public void transfer(String fromNo,String pwd,String toNo,double money){//收参
-        AccountDaoImpl accountDao= new AccountDaoImpl();
+        //接口引用指向实现类对象
+        AccountDao accountDao= new AccountDaoImpl();
         //组织完善业务功能
         try {
             //调用DButils开启事务

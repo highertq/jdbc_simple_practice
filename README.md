@@ -69,3 +69,17 @@ AccountServiceImpl利用AccountDaoImpl的update和select方法完成了转账业
 需要注意的是，转账中事务需要统一用一个connection，所以用到了ThreadLocal解决:`private static ThreadLocal<Connection> threadLocal = new ThreadLocal<>();`
 `Connection connection = threadLocal.get();//将当前线程中绑定的Connection对象赋值给connection`
 `threadLocal.set(connection);//把连接存在当前线程共享中`
+
+### 三层架构
+1.表示层
+命名：XXXView
+职责：收集用户的数据和需求、展示数据
+2.业务逻辑层
+命名：XXXServiceImpl
+职责：数据加工处理、调用DAO完成业务实现、控制事务
+3.数据访问层
+命名：XXXDaoImpl
+职责：向业务层提供数据，将业务层加工后的数据同步到数据库
+![img.png](三层架构.png)
+
+数据访问层AccountDaoImpl采用AccountDao接口实现，让DaoImpl迭代更方便、灵活
