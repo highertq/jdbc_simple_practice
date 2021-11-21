@@ -8,13 +8,9 @@ public class AccountServiceImpl {
     public void transfer(String fromNo,String pwd,String toNo,double money){//收参
         AccountDaoImpl accountDao= new AccountDaoImpl();
         //组织完善业务功能
-        Connection connection = null;
         try {
-            connection = DBUtils.getConnection();
-            System.out.println("server:"+connection);
-
-            // 设置当前事务为手动提交,也就是开启事务
-            connection.setAutoCommit(false);
+            //调用DButils开启事务
+            DBUtils.begin();
 
             //2.1验证fromNo是否存在
             Account account = accountDao.select(fromNo);
@@ -45,19 +41,12 @@ public class AccountServiceImpl {
             toAccount.setBalance(toAccount.getBalance()+money);
             accountDao.update(toAccount);
             System.out.println("转账成功");
-            connection.commit();
+            DBUtils.commit();
         } catch (RuntimeException e) {
-            e.printStackTrace();
             System.out.println("转账失败");
-            try {
-                connection.rollback();
-            } catch (SQLException ex) {
-                ex.printStackTrace();
-            }
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
-        } finally {
-            DBUtils.closeAll(connection,null,null);
+            DBUtils.rollback();
+            e.printStackTrace();
         }
     }
 }
+
