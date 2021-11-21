@@ -83,3 +83,4 @@ AccountServiceImpl利用AccountDaoImpl的update和select方法完成了转账业
 ![img.png](三层架构.png)
 
 数据访问层AccountDaoImpl采用AccountDao接口实现，让DaoImpl迭代更方便、灵活
+业务逻辑层AccountServiceImpl采用AccountService接口实现，让ServiceImpl迭代更方便、灵活

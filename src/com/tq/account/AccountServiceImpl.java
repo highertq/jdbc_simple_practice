@@ -3,7 +3,7 @@ package com.tq.account;
 import java.sql.Connection;
 import java.sql.SQLException;
 
-public class AccountServiceImpl {
+public class AccountServiceImpl implements AccountService{
     //转账
     public void transfer(String fromNo,String pwd,String toNo,double money){//收参
         //接口引用指向实现类对象
