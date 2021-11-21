@@ -65,3 +65,7 @@ sql.Date不支持转换，只能通过与1970年相差的毫秒值创建
 
 ## Service业务逻辑
 站在用户角度，一个功能即是一个业务，可能需要多个DAO组成
+AccountServiceImpl利用AccountDaoImpl的update和select方法完成了转账业务逻辑编写
+需要注意的是，转账中事务需要统一用一个connection，所以用到了ThreadLocal解决:`private static ThreadLocal<Connection> threadLocal = new ThreadLocal<>();`
+`Connection connection = threadLocal.get();//将当前线程中绑定的Connection对象赋值给connection`
+`threadLocal.set(connection);//把连接存在当前线程共享中`

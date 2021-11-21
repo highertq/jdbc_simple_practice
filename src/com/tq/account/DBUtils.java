@@ -7,7 +7,7 @@ import java.util.Properties;
 
 public class DBUtils {
     private static final Properties PROPERTIES = new Properties();
-
+    private static ThreadLocal<Connection> threadLocal = new ThreadLocal<>();
     static {
         InputStream is = DBUtils.class.getResourceAsStream("/db.properties");
         try {
@@ -21,9 +21,12 @@ public class DBUtils {
     }
 
     public static Connection getConnection() {
-        Connection connection = null;
+        Connection connection = threadLocal.get();//将当前线程中绑定的Connection对象赋值给connection
         try {
-            connection = DriverManager.getConnection(PROPERTIES.getProperty("url"), PROPERTIES.getProperty("username"), PROPERTIES.getProperty("password"));
+            if(connection==null){
+                connection = DriverManager.getConnection(PROPERTIES.getProperty("url"), PROPERTIES.getProperty("username"), PROPERTIES.getProperty("password"));
+                threadLocal.set(connection);//把连接存在当前线程共享中
+            }
         } catch (SQLException e) {
             e.printStackTrace();
         }

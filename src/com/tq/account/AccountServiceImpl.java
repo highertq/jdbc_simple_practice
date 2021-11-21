@@ -1,11 +1,21 @@
 package com.tq.account;
 
+import java.sql.Connection;
+import java.sql.SQLException;
+
 public class AccountServiceImpl {
     //转账
     public void transfer(String fromNo,String pwd,String toNo,double money){//收参
         AccountDaoImpl accountDao= new AccountDaoImpl();
         //组织完善业务功能
+        Connection connection = null;
         try {
+            connection = DBUtils.getConnection();
+            System.out.println("server:"+connection);
+
+            // 设置当前事务为手动提交,也就是开启事务
+            connection.setAutoCommit(false);
+
             //2.1验证fromNo是否存在
             Account account = accountDao.select(fromNo);
             if(account==null){
@@ -27,13 +37,27 @@ public class AccountServiceImpl {
             //2.5减少fromNo的余额
             account.setBalance(account.getBalance()-money);
             accountDao.update(account);
+
+            //假设出现异常 ArithmeticException
+            //int a = 10/0;
+
             //2.6增加toNo的余额
             toAccount.setBalance(toAccount.getBalance()+money);
             accountDao.update(toAccount);
             System.out.println("转账成功");
+            connection.commit();
         } catch (RuntimeException e) {
             e.printStackTrace();
             System.out.println("转账失败");
+            try {
+                connection.rollback();
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+            }
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        } finally {
+            DBUtils.closeAll(connection,null,null);
         }
     }
 }

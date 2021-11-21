@@ -19,6 +19,7 @@ public class AccountDaoImpl {
         String sql = "update account set password=?,name=?,balance=? where cardNo=?";
         try {
             connection = DBUtils.getConnection();
+            System.out.println("update:"+connection);
             preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setString(1,account.getPassword());
             preparedStatement.setString(2,account.getName());
@@ -29,7 +30,7 @@ public class AccountDaoImpl {
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
-            DBUtils.closeAll(connection,preparedStatement,null);
+            DBUtils.closeAll(null,preparedStatement,null);
         }
         return 0;
     }
@@ -41,6 +42,7 @@ public class AccountDaoImpl {
         String sql = "select * from account where cardNo=?";
         try {
             connection = DBUtils.getConnection();
+            System.out.println("select:"+connection);
             preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setString(1,cardNo);
             resultSet = preparedStatement.executeQuery();
@@ -55,7 +57,7 @@ public class AccountDaoImpl {
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
-            DBUtils.closeAll(connection,preparedStatement,resultSet);
+            DBUtils.closeAll(null,preparedStatement,resultSet);
         }
         return null;
     }
