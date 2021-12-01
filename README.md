@@ -84,3 +84,12 @@ AccountServiceImpl利用AccountDaoImpl的update和select方法完成了转账业
 
 数据访问层AccountDaoImpl采用AccountDao接口实现，让DaoImpl迭代更方便、灵活
 业务逻辑层AccountServiceImpl采用AccountService接口实现，让ServiceImpl迭代更方便、灵活
+
+![image](https://user-images.githubusercontent.com/44385387/144239658-91ce8d56-82d5-4fce-9588-9a1bb80668e9.png)
+* Utils存放工具类：DBUtils
+* entity存放实体类：Person
+* dao存放DAO接口（PersonDao）
+ + impl存放DAO接口实现类（PersonDaoImpl）
+* service存放service接口（PersonService）
+ + impl存放service接口实现类（PersonServiceImpl）
+* view存放程序启动类（main）
